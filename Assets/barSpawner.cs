@@ -23,17 +23,17 @@ public class barSpawner : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        spawnWait = .5f;//Random.Range(spawnLeastWait, spawnMostWait);
         StartCoroutine(waitSpawner());
     }
 
     // Update is called once per frame
     void Update()
     {
-        spawnWait = .8f;//Random.Range(spawnLeastWait, spawnMostWait);
-
+        
         if (obstacleArr.Count > 0)
         {
-            if (obstacleArr[0].transform.position.z < -10)
+            if (obstacleArr[0] != null && obstacleArr[0].transform.position.z < -10)
             {
                 GameObject toBeDestroyed = obstacleArr[0];
                 obstacleArr.Remove(toBeDestroyed);
@@ -44,12 +44,10 @@ public class barSpawner : MonoBehaviour
 
     IEnumerator waitSpawner()
     {
-        yield return new WaitForSeconds(startWait);
-
-        while (!stop)
-        {
+        //yield return new WaitForSeconds(startWait);
+        for (;;){
             Vector3 spawnPosition = new Vector3(0, 0, 0);
-            clone = Instantiate(obstacle, spawnPosition = transform.TransformPoint(spawnPos, 0, 0), gameObject.transform.rotation);
+            clone = Instantiate(obstacle, spawnPosition = transform.TransformPoint(Random.Range(-1, 2), 0, 0), gameObject.transform.rotation);
             obstacleArr.Add(clone);
             yield return new WaitForSeconds(spawnWait);
         }
